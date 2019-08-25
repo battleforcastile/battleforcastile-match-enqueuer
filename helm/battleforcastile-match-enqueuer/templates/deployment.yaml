@@ -1,0 +1,66 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: battleforcastile-match-enqueuer-deployment
+  labels:
+    name: battleforcastile-match-enqueuer
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: battleforcastile-match-enqueuer
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        name: battleforcastile-match-enqueuer
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: battleforcastile-match-enqueuer
+          image: "{{ .Values.image_battleforcastile_match_enqueuer.repository }}:{{ .Values.image_battleforcastile_match_enqueuer.tag }}"
+          imagePullPolicy: {{ .Values.image_battleforcastile_match_enqueuer.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.image_battleforcastile_match_enqueuer.container_port }}
+              protocol: TCP
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: battleforcastile-match-enqueuer-secrets
+                  key: secret_key
+            - name: RABBITMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: battleforcastile-match-enqueuer-secrets
+                  key: rabbitmq_user
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: battleforcastile-match-enqueuer-secrets
+                  key: rabbitmq_password
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
