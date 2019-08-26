@@ -19,8 +19,10 @@ class MatchPendingResource(Resource):
         ):
             abort(400)
 
-        credentials = pika.PlainCredentials(os.getenv('RABBITMQ_USER'), os.getenv('RABBITMQ_PASSWORD'))
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='http://rabbitmq', port=5672, credentials=credentials))
+        credentials = pika.PlainCredentials(
+            os.getenv('RABBITMQ_USER').rstrip(), os.getenv('RABBITMQ_PASSWORD').rstrip())
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='rabbitmq', port=5672, credentials=credentials))
         channel = connection.channel()
         channel.queue_declare(queue='matches_pending')
 
