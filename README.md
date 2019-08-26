@@ -1,5 +1,7 @@
 # Battle For Castile: Match Enqueuer
 
+[![CircleCI](https://circleci.com/gh/battleforcastile/battleforcastile-match-enqueuer/tree/master.svg?style=svg)](https://circleci.com/gh/battleforcastile/battleforcastile-match-enqueuer/tree/master)
+
 This micro-service handles the enqueuing of pending matches
 ## 1. Installation and set up
 
