@@ -12,6 +12,7 @@ uwsgi = "*"
 flask-restful = "*"
 prometheus-client = "*"
 pika = "*"
+google-cloud-logging = "*"
 
 [requires]
 python_version = "3.6"

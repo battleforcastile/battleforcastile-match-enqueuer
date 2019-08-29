@@ -6,6 +6,8 @@ import pika
 from flask import request, abort
 from flask_restful import Resource
 
+from battleforcastile_match_enqueuer.custom_logging import logging
+
 
 class MatchPendingResource(Resource):
     def post(self):
@@ -17,6 +19,16 @@ class MatchPendingResource(Resource):
                 not data.get('first_user').get('username') or
                 not data.get('first_user').get('character')
         ):
+            logging.info(
+                f'[ENQUEUE MATCH] Match could not be enqueued for creation due to missing information',
+                {
+                    'request_id': None,
+                    'service': 'battleforcastile-match-enqueuer',
+                    'username': None,
+                    'action': 'enqueue_match',
+                    'payload': data
+                }
+            )
             abort(400)
 
         credentials = pika.PlainCredentials(
@@ -40,7 +52,16 @@ class MatchPendingResource(Resource):
                                   delivery_mode=2,
                               ))
 
-        print("%r sent to exchange %r with data: %r" % (routing_key, exchange_name, data))
+        logging.info(
+            f'[ENQUEUE MATCH] Match was enqueued for creation',
+            {
+                'request_id': None,
+                'service': 'battleforcastile-match-enqueuer',
+                'username': None,
+                'action': 'enqueue_match',
+                'payload': data
+            }
+        )
         connection.close()
 
         return '', 201

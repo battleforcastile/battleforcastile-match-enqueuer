@@ -6,7 +6,7 @@ replicaCount: 1
 
 
 image_battleforcastile_match_enqueuer:
-  repository: battleforcastile/battleforcastile-match-enqueuer
+  repository: gcr.io/battle-for-castile/battleforcastile/battleforcastile-match-enqueuer
   tag: latest
   pullPolicy: Always
   container_port: 5000

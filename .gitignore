@@ -125,3 +125,6 @@ dmypy.json
 
 # Ignore prod-secrets file
 helm/*/templates/prod/*
+
+# Ignore keys
+keys
