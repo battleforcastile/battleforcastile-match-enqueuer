@@ -12,12 +12,8 @@ This micro-service handles the enqueuing of pending matches
 helm install stable/rabbitmq --name rabbitmq
 ```
 
-#### 1.2 Go to `/helm/battleforcastile-match-enqueuer/` folder and copy the content from `templates-examples` to `templates`
-```
-cp helm/battleforcastile-match-enqueuer/templates-examples/* helm/battleforcastile-match-enqueuer/templates/*
-```
+#### 1.8 Run `helm install helm/battleforcastile-match-enqueuer --set rabbitmqpassword=... --set rabbitmquser=... --set secretkey=...` and in a few minutes it should be deployed! :)
 
-#### 1.3 Uncomment the content from `battleforcastile-match-enqueuer-secrets.yml` (from `templates`) and replace:
- - The value of `secret_key` by the `base64` value of the secret key of your Flask App (can be random)
-
-#### 1.4 Run `helm install helm/battleforcastile-match-enqueuer` and in a few minutes it should be deployed! :)
+* The value of `rabbitmqpassword` is the `base64` of the rabbitmq password
+* The value of `rabbitmquser` is the `base64` value of the rabbitmq user
+* The value of `secretkey` is the `base64` value of the secret key of your Flask App (can be random)
