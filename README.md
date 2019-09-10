@@ -1,6 +1,6 @@
 # Battle For Castile: Match Enqueuer
 
-[![CircleCI](https://circleci.com/gh/battleforcastile/battleforcastile-match-enqueuer/tree/master.svg?style=svg)](https://circleci.com/gh/battleforcastile/battleforcastile-match-enqueuer/tree/master)
+[![Build Status](https://dev.azure.com/javidgon/Battleforcastile/_apis/build/status/battleforcastile.battleforcastile-match-enqueuer?branchName=master)](https://dev.azure.com/javidgon/Battleforcastile/_build/latest?definitionId=4&branchName=master)
 
 This micro-service handles the enqueuing of pending matches
 ## 1. Installation and set up
@@ -12,7 +12,7 @@ This micro-service handles the enqueuing of pending matches
 helm install stable/rabbitmq --name rabbitmq
 ```
 
-#### 1.8 Run `helm install helm/battleforcastile-match-enqueuer --set rabbitmqpassword=... --set rabbitmquser=... --set secretkey=...` and in a few minutes it should be deployed! :)
+#### 1.2 Run `helm install helm/battleforcastile-match-enqueuer --set rabbitmqpassword=... --set rabbitmquser=... --set secretkey=...` and in a few minutes it should be deployed! :)
 
 * The value of `rabbitmqpassword` is the `base64` of the rabbitmq password
 * The value of `rabbitmquser` is the `base64` value of the rabbitmq user
