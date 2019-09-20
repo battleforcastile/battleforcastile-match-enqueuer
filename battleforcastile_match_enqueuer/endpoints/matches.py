@@ -34,7 +34,13 @@ class MatchPendingResource(Resource):
         credentials = pika.PlainCredentials(
             os.getenv('RABBITMQ_USER', 'user').rstrip(), os.getenv('RABBITMQ_PASSWORD', '').rstrip())
         connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='rabbitmq', port=5672, credentials=credentials))
+            pika.ConnectionParameters(
+                host='battleforcastile-match-consumer-rabbitmq',
+                port=5672,
+                credentials=credentials,
+                connection_attempts=10
+            )
+        )
         channel = connection.channel()
         channel.queue_declare(queue='matches_pending')
 
